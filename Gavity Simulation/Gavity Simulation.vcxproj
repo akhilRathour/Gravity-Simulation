@@ -141,6 +141,7 @@
     <None Include="light.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="body.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="glad.c" />
@@ -163,6 +164,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="body.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="IMgui\imconfig.h" />

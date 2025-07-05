@@ -107,6 +107,9 @@
     <ClCompile Include="renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="body.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VBO.h">
@@ -160,10 +163,13 @@
     <ClInclude Include="physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="window.h">
+    <ClInclude Include="renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="renderer.h">
+    <ClInclude Include="body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,23 +5,11 @@
 #include"imgui_impl_glfw.h"
 #include"imgui_impl_opengl3.h"
 #include"Window.h"
+#include"physics.h"
+#include "Body.h"
+#include"renderer.h"
 
 
-// Vertices coordinates
-Vertex vertices[] =
-{ //               COORDINATES           /            COLORS          /           NORMALS         /       TEXTURE COORDINATES    //
-	Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-	Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-	Vertex{glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
-	Vertex{glm::vec3(1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
-};
-
-// Indices for vertices order
-GLuint indices[] =
-{
-	0, 1, 2,
-	0, 2, 3
-};
 
 Vertex lightVertices[] =
 { //     COORDINATES     //
@@ -51,50 +39,6 @@ GLuint lightIndices[] =
 	4, 6, 7
 };
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-void GenerateCircle(
-	std::vector<Vertex>& vertices,
-	std::vector<GLuint>& indices,
-	float radius,
-	int segments
-) {
-	vertices.clear();
-	indices.clear();
-
-	// Center vertex
-	vertices.push_back({
-		glm::vec3(0.0f, 0.0f, 0.0f),     // position
-		glm::vec3(0.0f, 1.0f, 0.0f),     // normal
-		glm::vec3(1.0f, 1.0f, 1.0f),     // color
-		glm::vec2(0.5f, 0.5f)            // tex coord (center of texture)
-		});
-
-	for (int i = 0; i <= segments; ++i) {
-		float angle = (2.0f * M_PI * i) / segments;
-		float x = radius * cos(angle);
-		float z = radius * sin(angle);
-
-		float u = (x / (2 * radius)) + 0.5f;
-		float v = (z / (2 * radius)) + 0.5f;
-
-		vertices.push_back({
-			glm::vec3(x, 0.0f, z),
-			glm::vec3(0.0f, 1.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, 1.0f),
-			glm::vec2(u, v)
-			});
-	}
-
-	// Create triangle fan indices
-	for (int i = 1; i <= segments; ++i) {
-		indices.push_back(0);        // center
-		indices.push_back(i);
-		indices.push_back(i + 1);
-	}
-}
 void GenerateSphere(
 	std::vector<Vertex>& vertices,
 	std::vector<GLuint>& indices,
@@ -183,12 +127,9 @@ int main()
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
-	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
-	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+
 	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
-	// Create floor mesh
-	Mesh floor(verts, ind, tex);
+	
 
 
 	// Shader for light cube
@@ -222,26 +163,41 @@ int main()
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 
-	//creating a circle
-	std::vector<Vertex> circleVertices;
-	std::vector<GLuint> circleIndices;
-
-	GenerateCircle(circleVertices, circleIndices, 0.3f, 64);
-	Mesh circle(circleVertices, circleIndices, tex);
-
+	
 	//creating sphere
 	std::vector<Vertex> sphereVertices;
 	std::vector<GLuint> sphereIndices;
 
-	GenerateSphere(sphereVertices, sphereIndices, 0.2f, 36, 18); // smooth sphere
-	Mesh sphere(sphereVertices, sphereIndices, tex);
+	GenerateSphere(sphereVertices, sphereIndices, 2.0f, 36, 18); // smooth sphere
+	Mesh earthMesh(sphereVertices, sphereIndices, tex);
+	Mesh moonMesh(sphereVertices, sphereIndices, tex);
+
+	Renderer renderer;
+	Physics physics;
+
+	std::vector<Body*> bodies;
+	glm::vec3 earthPosition = glm::vec3(0.0f, 0.0f, -2.0f);
+	glm::vec3 earthInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	Body* earth = new Body(earthMesh, 597.4f, earthPosition, earthInitialVelocity);
+	///mesh(mesh), mass(mass), position(position), velocity(velocity), 
+	glm::vec3 moonPosition = glm::vec3(9.0f, 3.0f, 0.0f);
+	glm::vec3 moonInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	Body* moon = new Body(moonMesh, 7352.2f, moonPosition,moonInitialVelocity);
+
+	
+
+	bodies.push_back(earth);
+	bodies.push_back(moon);
+
+	renderer.Submit(earth);
+	renderer.Submit(moon);
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
 	// Creates camera object
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
-
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 22.0f));
+	float lastFrame = glfwGetTime();
 	// Main while loop
 	while (!window1.ShouldClose())
 	{
@@ -250,12 +206,7 @@ int main()
 			glfwSetWindowShouldClose(window1.GetGLFWWindow(), true);
 
 		window1.Clear();
-		//// Specify the color of the background
-		//glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		//// Clean the back buffer and depth buffer
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Tell OpenGL a new frame is about to begin
+		
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -268,22 +219,15 @@ int main()
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 
-		// Draws different meshes
-		//floor.Draw(shaderProgram, camera);
+		
 		light.Draw(lightShader, camera);
-		glm::vec3 objectPos = glm::vec3(0.0f, -1.0f, 0.0f);
-		glm::mat4 objectModel = glm::mat4(1.0f);
-		objectModel = glm::translate(objectModel, objectPos);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
-		circle.Draw(shaderProgram, camera);
-
-		 objectPos = glm::vec3(0.0f, 1.0f, 0.0f);
+		// Calculate deltaTime
+		float currentFrame = glfwGetTime();
+		float deltaTime = currentFrame - lastFrame;
 		 
-		 objectModel = glm::mat4(1.0f);
-		objectModel = glm::translate(objectModel, objectPos);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
-		sphere.Draw(shaderProgram, camera);
-
+		physics.ApplyGravitationalForces(bodies);
+		physics.UpdateBodies(bodies, deltaTime);
+		renderer.DrawAll(shaderProgram, camera);
 		// ImGUI window creation
 		ImGui::Begin("My name is window, ImGUI window");
 		// Text that appears in the window

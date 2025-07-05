@@ -1,6 +1,13 @@
-#ifndef PHYSICS_CLASS_H
-#define PHYSICS_CLASS_H
+#pragma once
 
+#include "Body.h"
+#include <vector>
 
+class Physics
+{
+public:
+    void ApplyGravitationalForces(std::vector<Body*>& bodies);
+    void UpdateBodies(std::vector<Body*>& bodies, float deltaTime);
 
-#endif
+    static constexpr float G = 6.67430e-11f; // Gravitational constant
+};
