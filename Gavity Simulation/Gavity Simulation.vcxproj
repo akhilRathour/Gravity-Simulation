@@ -154,11 +154,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shaderclass.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="textureClass.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -174,10 +176,12 @@
     <ClInclude Include="IMgui\imstb_truetype.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="renderer.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />

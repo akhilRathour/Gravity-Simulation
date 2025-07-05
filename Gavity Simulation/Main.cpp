@@ -4,9 +4,7 @@
 #include"imgui.h"
 #include"imgui_impl_glfw.h"
 #include"imgui_impl_opengl3.h"
-const unsigned int width = 800;
-const unsigned int height = 800;
-
+#include"Window.h"
 
 
 // Vertices coordinates
@@ -158,42 +156,17 @@ void GenerateSphere(
 
 int main()
 {
-	// Initialize GLFW
-	glfwInit();
-
-	// Tell GLFW what version of OpenGL we are using 
-	// In this case we are using OpenGL 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	// Tell GLFW we are using the CORE profile
-	// So that means we only have the modern functions
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
-	GLFWwindow* window = glfwCreateWindow(width, height, "YoutubeOpenGL", NULL, NULL);
-	// Error check if the window fails to create
-	if (window == NULL)
-	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return -1;
-	}
-	// Introduce the window into the current context
-	glfwMakeContextCurrent(window);
-
-	// Load GLAD so it configures OpenGL
-	gladLoadGL();
-	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, width, height);
-
+	Window window1("Gravity Simulation");
+	
+	int width, height;
+	glfwGetFramebufferSize(window1.window, &width, &height);
 
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window1.window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
 	
@@ -253,14 +226,14 @@ int main()
 	std::vector<Vertex> circleVertices;
 	std::vector<GLuint> circleIndices;
 
-	GenerateCircle(circleVertices, circleIndices, 1.0f, 64);
+	GenerateCircle(circleVertices, circleIndices, 0.3f, 64);
 	Mesh circle(circleVertices, circleIndices, tex);
 
 	//creating sphere
 	std::vector<Vertex> sphereVertices;
 	std::vector<GLuint> sphereIndices;
 
-	GenerateSphere(sphereVertices, sphereIndices, 1.0f, 36, 18); // smooth sphere
+	GenerateSphere(sphereVertices, sphereIndices, 0.2f, 36, 18); // smooth sphere
 	Mesh sphere(sphereVertices, sphereIndices, tex);
 
 	// Enables the Depth Buffer
@@ -270,12 +243,17 @@ int main()
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 	// Main while loop
-	while (!glfwWindowShouldClose(window))
+	while (!window1.ShouldClose())
 	{
-		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clean the back buffer and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		if (glfwGetKey(window1.GetGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window1.GetGLFWWindow(), true);
+
+		window1.Clear();
+		//// Specify the color of the background
+		//glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		//// Clean the back buffer and depth buffer
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Tell OpenGL a new frame is about to begin
 		ImGui_ImplOpenGL3_NewFrame();
@@ -283,9 +261,9 @@ int main()
 		ImGui::NewFrame();
 
 
-
+		ImGuiIO& io = ImGui::GetIO();
 		// Handles camera inputs
-		camera.Inputs(window);
+		camera.Inputs(window1.GetGLFWWindow(),io);
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
@@ -314,13 +292,21 @@ int main()
 		// Ends the window
 		ImGui::End();
 
+		ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+		ImGui::Begin("FPS Overlay", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
+			ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav);
+
+		ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+		ImGui::End();
+
 		// Renders the ImGUI elements
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		// Swap the back buffer with the front buffer
-		glfwSwapBuffers(window);
-		// Take care of all GLFW events
-		glfwPollEvents();
+
+		glfwSwapInterval(1); // Enable V-Sync
+
+		window1.SwapBuffers();
+		window1.PollEvents();
 	}
 
 	// Deletes all ImGUI instances
@@ -331,9 +317,8 @@ int main()
 	// Delete all the objects we've created
 	shaderProgram.Delete();
 	lightShader.Delete();
-	// Delete window before ending the program
-	glfwDestroyWindow(window);
-	// Terminate GLFW before ending the program
+	// used destructor of window class to delete the window
+
 	glfwTerminate();
 	return 0;
 }
