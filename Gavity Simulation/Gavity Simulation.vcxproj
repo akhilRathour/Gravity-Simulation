@@ -178,6 +178,7 @@
     <ClInclude Include="IMgui\imstb_truetype.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="physicsConstants.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="texture.h" />
