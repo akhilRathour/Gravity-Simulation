@@ -8,7 +8,7 @@
 #include"physics.h"
 #include "Body.h"
 #include"renderer.h"
-
+#include"physicsConstants.h"
 
 
 Vertex lightVertices[] =
@@ -121,7 +121,13 @@ int main()
 		Texture( "planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
 		Texture( "planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 	};
+	Texture SUNtextures[]
+	{
+		Texture( "2k_sun.jpg", "diffuse", 0, GL_RGB, GL_UNSIGNED_BYTE),
+		
+	};
 
+	
 
 	
 
@@ -129,6 +135,7 @@ int main()
 	Shader shaderProgram("default.vert", "default.frag");
 
 	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+	std::vector <Texture> SUNtex(SUNtextures, SUNtextures + sizeof(SUNtextures) / sizeof(Texture));
 	
 
 
@@ -170,27 +177,27 @@ int main()
 
 	GenerateSphere(sphereVertices, sphereIndices, 2.0f, 36, 18); // smooth sphere
 	Mesh earthMesh(sphereVertices, sphereIndices, tex);
-	Mesh moonMesh(sphereVertices, sphereIndices, tex);
+	Mesh SunMesh(sphereVertices, sphereIndices, SUNtex);
 
 	Renderer renderer;
 	Physics physics;
 
 	std::vector<Body*> bodies;
-	glm::vec3 earthPosition = glm::vec3(0.0f, 0.0f, -2.0f);
-	glm::vec3 earthInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-	Body* earth = new Body(earthMesh, 597.4f, earthPosition, earthInitialVelocity);
+	//glm::vec3 earthPosition = glm::vec3(0.0f, 0.0f, -2.0f);
+	//glm::vec3 earthInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	Body* earth = new Body(earthMesh, Constants::EarthMass, Constants::EarthPos, Constants::EarthVel);
 	///mesh(mesh), mass(mass), position(position), velocity(velocity), 
-	glm::vec3 moonPosition = glm::vec3(9.0f, 3.0f, 0.0f);
-	glm::vec3 moonInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-	Body* moon = new Body(moonMesh, 7352.2f, moonPosition,moonInitialVelocity);
+	/*glm::vec3 SunPosition = glm::vec3(9.0f, 3.0f, 0.0f);
+	glm::vec3 SunInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);*/
+	Body* Sun = new Body(SunMesh, Constants::SunMass, Constants::SunPos, Constants::SunVel);
 
 	
 
 	bodies.push_back(earth);
-	bodies.push_back(moon);
+	bodies.push_back(Sun);
 
 	renderer.Submit(earth);
-	renderer.Submit(moon);
+	renderer.Submit(Sun);
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -225,8 +232,8 @@ int main()
 		float currentFrame = glfwGetTime();
 		float deltaTime = currentFrame - lastFrame;
 		 
-		physics.ApplyGravitationalForces(bodies);
-		physics.UpdateBodies(bodies, deltaTime);
+		/*physics.ApplyGravitationalForces(bodies);
+		physics.UpdateBodies(bodies, deltaTime);*/
 		renderer.DrawAll(shaderProgram, camera);
 		// ImGUI window creation
 		ImGui::Begin("My name is window, ImGUI window");

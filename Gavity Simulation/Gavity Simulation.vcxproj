@@ -187,6 +187,7 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="2k_sun.jpg" />
     <Image Include="awesomeface.png" />
     <Image Include="brick.png" />
     <Image Include="planks.png" />
