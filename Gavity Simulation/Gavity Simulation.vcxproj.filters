@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\meshClass">
+      <UniqueIdentifier>{e482da2b-bc86-4806-af02-2c1bf3ebc975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{e0eb7d2c-18a9-4a69-97db-564d6af2376a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mesh">
+      <UniqueIdentifier>{a4edf9cb-df8e-455d-9d46-7707b0f9df78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders">
+      <UniqueIdentifier>{4d9d7729-21fd-44da-a41a-7c285b9cc9f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui">
+      <UniqueIdentifier>{9297c247-5fb6-43b0-b860-97270da8ee8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\iMGUI">
+      <UniqueIdentifier>{115eb61a-9c2b-4572-810c-1c5713f577df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="light.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="light.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="default.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="default.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="textureClass.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="shaderclass.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="EBO.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files\meshClass</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_demo.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_draw.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_tables.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMgui\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VBO.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="VAO.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="shaderClass.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EBO.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imconfig.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imgui.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imgui_impl_glfw.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imgui_impl_opengl3.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imgui_internal.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imstb_rectpack.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imstb_textedit.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMgui\imstb_truetype.h">
+      <Filter>Header Files\iMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="TEX.jpeg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="planksSpec.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="planks.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="brick.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="awesomeface.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
