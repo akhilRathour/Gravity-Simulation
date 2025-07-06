@@ -4,7 +4,7 @@
 void Physics::ApplyGravitationalForces(std::vector<Body*>& bodies)
 {
     //debug
-   /* for (size_t i = 0; i < bodies.size(); ++i) {
+  /*  for (size_t i = 0; i < bodies.size(); ++i) {
         Body* b = bodies[i];
         std::cout << "Body " << i
             << " Mass: " << b->mass
@@ -38,10 +38,25 @@ void Physics::ApplyGravitationalForces(std::vector<Body*>& bodies)
 
 void Physics::UpdateBodies(std::vector<Body*>& bodies, float deltaTime)
 {
+    // Step 1: Store current acceleration
+    std::vector<glm::vec3> oldAccelerations;
     for (Body* body : bodies)
     {
-        body->velocity += body->acceleration * deltaTime;
-        body->position += body->velocity * deltaTime;
-        body->acceleration = glm::vec3(0.0f); // Reset for next frame
+        oldAccelerations.push_back(body->acceleration);
+        // Update position using Velocity Verlet
+        body->position += body->velocity * deltaTime + 0.5f * body->acceleration * deltaTime * deltaTime;
+        // Reset acceleration for recomputing in the next ApplyGravitationalForces
+        body->acceleration = glm::vec3(0.0f);
+    }
+
+    // Step 2: Recompute acceleration using new positions
+    ApplyGravitationalForces(bodies);
+
+    // Step 3: Update velocities using average acceleration
+    for (size_t i = 0; i < bodies.size(); ++i)
+    {
+        Body* body = bodies[i];
+        body->velocity += 0.5f * (oldAccelerations[i] + body->acceleration) * deltaTime;
     }
 }
+

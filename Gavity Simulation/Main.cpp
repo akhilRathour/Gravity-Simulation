@@ -10,6 +10,7 @@
 #include"renderer.h"
 #include"physicsConstants.h"
 
+float simulationSpeed = 1.0f;
 
 Vertex lightVertices[] =
 { //     COORDINATES     //
@@ -183,12 +184,10 @@ int main()
 	Physics physics;
 
 	std::vector<Body*> bodies;
-	//glm::vec3 earthPosition = glm::vec3(0.0f, 0.0f, -2.0f);
-	//glm::vec3 earthInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	Body* earth = new Body(earthMesh, Constants::EarthMass, Constants::EarthPos, Constants::EarthVel);
 	///mesh(mesh), mass(mass), position(position), velocity(velocity), 
-	/*glm::vec3 SunPosition = glm::vec3(9.0f, 3.0f, 0.0f);
-	glm::vec3 SunInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);*/
+	
 	Body* Sun = new Body(SunMesh, Constants::SunMass, Constants::SunPos, Constants::SunVel);
 
 	
@@ -203,7 +202,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Creates camera object
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 22.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 220.0f));
 	float lastFrame = glfwGetTime();
 	// Main while loop
 	while (!window1.ShouldClose())
@@ -223,22 +222,27 @@ int main()
 		// Handles camera inputs
 		camera.Inputs(window1.GetGLFWWindow(),io);
 		// Updates and exports the camera matrix to the Vertex Shader
-		camera.updateMatrix(45.0f, 0.1f, 100.0f);
+		camera.updateMatrix(45.0f, 0.1f, 1000.0f);
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		
 		light.Draw(lightShader, camera);
 		// Calculate deltaTime
 		float currentFrame = glfwGetTime();
 		float deltaTime = currentFrame - lastFrame;
-		 
-		/*physics.ApplyGravitationalForces(bodies);
-		physics.UpdateBodies(bodies, deltaTime);*/
+		if (deltaTime > 0.1f) {
+			deltaTime = 0.1f; // Cap deltaTime to prevent large jumps
+		}
+		physics.ApplyGravitationalForces(bodies);
+		physics.UpdateBodies(bodies, deltaTime*simulationSpeed);
 		renderer.DrawAll(shaderProgram, camera);
 		// ImGUI window creation
-		ImGui::Begin("My name is window, ImGUI window");
+		ImGui::Begin("Gravity Simulator");
 		// Text that appears in the window
-		ImGui::Text("Hello there adventurer!");
+		ImGui::Text("Controls");
+		ImGui::SliderFloat("Simulation Speed", &simulationSpeed, 0.0f, 10.0f, "%.2fx");
+
 		
 		// Ends the window
 		ImGui::End();
