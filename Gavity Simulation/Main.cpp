@@ -310,7 +310,10 @@ int main()
 		ImGui::Begin("Gravity Simulator");
 		// Text that appears in the window
 		ImGui::Text("Controls");
-		ImGui::SliderFloat("Simulation Speed", &simulationSpeed, 0.0f, 10.0f, "%.2fx");
+		ImGui::Text("WASD and mouse to look around");
+		ImGui::Text("press F11 to exit full screen");
+		ImGui::Text("press Esc to exit program");
+		ImGui::SliderFloat("Simulation Speed", &simulationSpeed, 0.0f, 100.0f, "%.2f");
 
 		////fncn to add a new body
 		//ImGui::SliderFloat("Mass", &userMass, 1.0f, 1000.0f);

@@ -45,6 +45,12 @@
     <None Include="default.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="trail.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="trail.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
