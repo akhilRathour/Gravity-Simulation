@@ -62,6 +62,15 @@ void Window::SwapBuffers()
 void Window::PollEvents()
 {
     glfwPollEvents();
+	static bool f11Pressed = false;
+    if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS && !f11Pressed) {
+        ToggleFullscreen();
+        f11Pressed = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_RELEASE) {
+        f11Pressed = false;
+    }
+
 }
 
 void Window::Clear()
@@ -75,3 +84,22 @@ void Window::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+void Window::ToggleFullscreen() {
+    isFullscreen = !isFullscreen;
+
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+    if (isFullscreen) {
+        // Save current window position and size
+        glfwGetWindowPos(window, &windowedX, &windowedY);
+        glfwGetWindowSize(window, &windowedWidth, &windowedHeight);
+
+        // Switch to fullscreen
+        glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    }
+    else {
+        // Switch back to windowed
+        glfwSetWindowMonitor(window, nullptr, windowedX, windowedY, windowedWidth, windowedHeight, 0);
+    }
+}

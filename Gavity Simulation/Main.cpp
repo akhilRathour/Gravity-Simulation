@@ -219,15 +219,52 @@ int main()
 	// Main while loop
 	while (!window1.ShouldClose())
 	{
+		
+		/*if (glfwGetKey(window1.GetGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window1.GetGLFWWindow(), true);*/
 
-		if (glfwGetKey(window1.GetGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window1.GetGLFWWindow(), true);
 
 		window1.Clear();
 		
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+
+
+		//exit logic starts
+		static bool showExitConfirmation = false;
+
+		// 1. Detect Escape Press
+		if (glfwGetKey(window1.GetGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS && !ImGui::IsAnyItemActive())
+		{
+			if (!showExitConfirmation)
+			{
+				showExitConfirmation = true;
+				ImGui::OpenPopup("Exit Confirmation");
+			}
+		}
+
+		// 2. Popup Modal
+		if (ImGui::BeginPopupModal("Exit Confirmation", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("Are you sure you want to exit?");
+			ImGui::Separator();
+
+			if (ImGui::Button("Yes", ImVec2(120, 0))) {
+				glfwSetWindowShouldClose(window1.GetGLFWWindow(), true); // Close app
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("No", ImVec2(120, 0))) {
+				showExitConfirmation = false;
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+
+
+		//exit logic ends
 
 
 		ImGuiIO& io = ImGui::GetIO();
