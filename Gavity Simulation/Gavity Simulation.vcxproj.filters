@@ -195,5 +195,14 @@
     <Image Include="2k_sun.jpg">
       <Filter>Resource Files\textures</Filter>
     </Image>
+    <Image Include="2k_earth_daymap.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="2k_earth_specular_map.tif">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="2k_earth_clouds.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

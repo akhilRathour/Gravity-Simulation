@@ -187,6 +187,9 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="2k_earth_clouds.jpg" />
+    <Image Include="2k_earth_daymap.jpg" />
+    <Image Include="2k_earth_specular_map.tif" />
     <Image Include="2k_sun.jpg" />
     <Image Include="awesomeface.png" />
     <Image Include="brick.png" />

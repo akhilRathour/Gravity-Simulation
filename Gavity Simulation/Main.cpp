@@ -114,23 +114,24 @@ int main()
 	Window window1("Gravity Simulation");
 	
 	int width, height;
-	glfwGetFramebufferSize(window1.window, &width, &height);
+	glfwGetFramebufferSize(window1.GetGLFWWindow(), &width, &height);
 
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window1.window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window1.GetGLFWWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
 	
 
 	// Texture data
-	Texture textures[]
+	Texture Earthtextures[]
 	{
-		Texture( "planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture( "planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+		Texture( "2k_earth_daymap.jpg", "diffuse", 0, GL_RGB, GL_UNSIGNED_BYTE),
+		//Texture( "2k_earth_clouds.jpg", "diffuse", 1, GL_RGB, GL_UNSIGNED_BYTE),
+		//Texture( "2k_earth_spec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 	};
 	Texture SUNtextures[]
 	{
@@ -145,7 +146,7 @@ int main()
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
 
-	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+	std::vector <Texture> Earthtex(Earthtextures, Earthtextures + sizeof(Earthtextures) / sizeof(Texture));
 	std::vector <Texture> SUNtex(SUNtextures, SUNtextures + sizeof(SUNtextures) / sizeof(Texture));
 	
 
@@ -156,7 +157,7 @@ int main()
 	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 	// Create light mesh
-	Mesh light(lightVerts, lightInd, tex);
+	Mesh light(lightVerts, lightInd, Earthtex);
 
 	
 
@@ -187,7 +188,7 @@ int main()
 	std::vector<GLuint> sphereIndices;
 
 	GenerateSphere(sphereVertices, sphereIndices, 2.0f, 36, 18); // smooth sphere
-	Mesh earthMesh(sphereVertices, sphereIndices, tex);
+	Mesh earthMesh(sphereVertices, sphereIndices, Earthtex);
 	Mesh SunMesh(sphereVertices, sphereIndices, SUNtex);
 
 	Renderer renderer;
@@ -235,7 +236,9 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 1000.0f);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		//wireframe mode
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		
 		light.Draw(lightShader, camera);
