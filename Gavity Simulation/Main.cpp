@@ -320,6 +320,9 @@ int main()
 		ImGui::Text("WASD and mouse to look around");
 		ImGui::Text("press F11 to exit full screen");
 		ImGui::Text("press Esc to exit program");
+		if (ImGui::Button("Reset Simulation")) {
+			renderer.ResetSimulation();
+		}
 		ImGui::SliderFloat("Simulation Speed", &simulationSpeed, 0.0f, 100.0f, "%.2f");
 		static bool showTrails = true;
 		static int trailLength = 300;

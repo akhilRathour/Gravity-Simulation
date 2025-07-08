@@ -21,6 +21,7 @@ public:
             body->trail.setMaxLength(len);
         }
     }
+    void ResetSimulation();
 private:
     std::vector<Body*> bodies;
 	bool showTrails = true; // Default to true, can be toggled

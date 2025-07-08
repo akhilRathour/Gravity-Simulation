@@ -15,7 +15,10 @@ public:
     void UpdateBuffer();
     void Draw() const;
 	void setMaxLength(size_t length) { maxLength = length; }
-
+    void reset() {
+        points.clear();
+        UpdateBuffer(); // Clear the VBO
+	}
 private:
     GLuint VAO, VBO;
 };

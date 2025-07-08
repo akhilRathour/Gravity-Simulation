@@ -41,3 +41,9 @@ void Renderer::DrawTrails(Shader& shader, Camera& camera) {
         }
     }
 }
+
+void Renderer::ResetSimulation() {
+    for (auto* body : bodies) {
+        body->Reset();
+    }
+}

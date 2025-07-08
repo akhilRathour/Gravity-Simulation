@@ -17,5 +17,10 @@ public:
      //for trail
      TrailMesh trail;
      void UpdateTrail();
+
+     // // Store initial state for reset
+     glm::vec3 initialPosition;
+     glm::vec3 initialVelocity;
+     void Reset();
 };
 
