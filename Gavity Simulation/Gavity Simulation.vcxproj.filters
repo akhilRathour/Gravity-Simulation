@@ -116,6 +116,9 @@
     <ClCompile Include="body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="trailMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VBO.h">
@@ -178,8 +181,11 @@
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="trailMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="physicsConstants.h">
-      <Filter>Resource Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

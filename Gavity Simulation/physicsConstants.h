@@ -13,7 +13,7 @@ namespace Constants {
     glm::vec3 EarthPos = glm::vec3(100.0f, 0.0f, 0.0f);
 	glm::vec3 MarsPos = glm::vec3(-200.0f, 0.0f, 0.0f);
    
-    glm::vec3 SunVel = glm::vec3(0.0f,0.0f,0.0f);
+    glm::vec3 SunVel = glm::vec3(0.0f,0.20f,0.0f);
     glm::vec3 EarthVel = glm::vec3( 0.0f, 0.0f, 1.0f );
     glm::vec3 MarsVel = glm::vec3( 0.0f, 0.0f, 0.70f );
     

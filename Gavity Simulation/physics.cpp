@@ -57,6 +57,7 @@ void Physics::UpdateBodies(std::vector<Body*>& bodies, float deltaTime)
     {
         Body* body = bodies[i];
         body->velocity += 0.5f * (oldAccelerations[i] + body->acceleration) * deltaTime;
+		
     }
 }
 

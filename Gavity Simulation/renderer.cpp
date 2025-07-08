@@ -23,5 +23,21 @@ void Renderer::DrawAll( Shader& shader,  Camera& camera)
         
         glUniformMatrix4fv(glGetUniformLocation(s.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
         body->mesh.Draw(s, camera);
+        body->UpdateTrail(); // Update trail with new position
+    }
+   
+
+}
+
+
+
+void Renderer::DrawTrails(Shader& shader, Camera& camera) {
+    if(showTrails){
+        shader.Activate();
+        camera.Matrix(shader, "camMatrix");
+
+        for (auto* body : bodies) {
+            body->trail.Draw();
+        }
     }
 }

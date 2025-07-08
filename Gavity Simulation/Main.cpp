@@ -150,6 +150,9 @@ int main()
 	std::vector <Texture> SUNtex(SUNtextures, SUNtextures + sizeof(SUNtextures) / sizeof(Texture));
 	
 
+	//trail shader
+	Shader trailShader("trail.vert", "trail.frag");
+
 
 	// Shader for light cube
 	Shader lightShader("light.vert", "light.frag");
@@ -306,6 +309,10 @@ int main()
 		physics.ApplyGravitationalForces(bodies);
 		physics.UpdateBodies(bodies, deltaTime*simulationSpeed);
 		renderer.DrawAll(shaderProgram, camera);
+		
+			renderer.DrawTrails(trailShader, camera);
+
+
 		// ImGUI window creation
 		ImGui::Begin("Gravity Simulator");
 		// Text that appears in the window
@@ -314,7 +321,14 @@ int main()
 		ImGui::Text("press F11 to exit full screen");
 		ImGui::Text("press Esc to exit program");
 		ImGui::SliderFloat("Simulation Speed", &simulationSpeed, 0.0f, 100.0f, "%.2f");
+		static bool showTrails = true;
+		static int trailLength = 300;
 
+		ImGui::Checkbox("Show Trails", &showTrails);
+		renderer.SetShowTrails(showTrails);
+
+		ImGui::SliderInt("Trail Length", &trailLength, 0, 1000);
+		renderer.SetTrailLength(trailLength);
 		////fncn to add a new body
 		//ImGui::SliderFloat("Mass", &userMass, 1.0f, 1000.0f);
 		//ImGui::SliderFloat("Depth", &objectDepth, 0.1f, 100.9f);
