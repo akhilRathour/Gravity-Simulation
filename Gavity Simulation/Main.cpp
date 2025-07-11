@@ -199,12 +199,12 @@ int main()
 
 	std::vector<Body*> bodies;
 
-	Body* earth = new Body(earthMesh, Constants::EarthMass, Constants::EarthPos, Constants::EarthVel);
+	Body* earth = new Body(earthMesh, Constants::EarthMass,Constants::EarthRadius, Constants::EarthPos, Constants::EarthVel);
 	///mesh(mesh), mass(mass), position(position), velocity(velocity), 
 	
-	Body* Sun = new Body(SunMesh, Constants::SunMass, Constants::SunPos, Constants::SunVel);
+	Body* Sun = new Body(SunMesh, Constants::SunMass, Constants::SunRadius, Constants::SunPos, Constants::SunVel);
 
-	Body* Mars = new Body(earthMesh, Constants::MarsMass, Constants::MarsPos, Constants::MarsVel);
+	Body* Mars = new Body(earthMesh, Constants::MarsMass, Constants::MarsRadius, Constants::MarsPos, Constants::MarsVel);
 
 	bodies.push_back(earth);
 	bodies.push_back(Sun);

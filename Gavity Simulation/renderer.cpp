@@ -12,7 +12,7 @@ void Renderer::DrawAll( Shader& shader,  Camera& camera)
     {    
 
         glm::mat4 model = glm::translate(glm::mat4(1.0f), body->position);
-
+        model = glm::scale(model, glm::vec3(body->radius));
        /* std::cout << "Position: " << body->position.x << ", "
             << body->position.y << ", "
             << body->position.z << std::endl;*/

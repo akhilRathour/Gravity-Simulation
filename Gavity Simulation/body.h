@@ -6,12 +6,13 @@
 class Body
 {
 public:
-    Body( Mesh& mesh, float mass,  glm::vec3& position, glm::vec3& velocity);
+    Body( Mesh& mesh, float mass,float radius,  glm::vec3& position, glm::vec3& velocity);
 
     glm::vec3 position;
     glm::vec3 velocity;
     glm::vec3 acceleration;
     float mass;
+	float radius = 1.0f; // scale wrt to earth radius
      Mesh& mesh;
 
      //for trail
