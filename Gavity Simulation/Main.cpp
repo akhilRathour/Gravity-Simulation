@@ -280,26 +280,13 @@ int main()
 		//wireframe mode
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		
-		light.Draw(lightShader, camera);
 
-		//if (userBody) {
-		//	int display_w, display_h;
-		//	glfwGetFramebufferSize(window1.GetGLFWWindow(), &display_w, &display_h);
+		glm::vec3 lightPos = Sun->position;
+		shaderProgram.Activate();
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		//light.Draw(lightShader, camera);//dont sraw light just simulate its affect
 
-		//	double mouseX, mouseY;
-		//	glfwGetCursorPos(window1.GetGLFWWindow(), &mouseX, &mouseY);
-
-		//	glm::vec3 winCoords = glm::vec3((float)mouseX, (float)(display_h - mouseY), objectDepth);
-		//	glm::mat4 view = camera.view;
-		//	glm::mat4 proj = camera.projection;
-
-		//	glm::vec3 worldPos = glm::unProject(winCoords, view, proj, glm::vec4(0.0f, 0.0f, (float)display_w, (float)display_h));
-
-		//	userBody->position = worldPos;
-		//	userBody->velocity = glm::vec3(0.0f); // Freeze during move
-		//}
-
+	
 		// Calculate deltaTime
 		float currentFrame = glfwGetTime();
 		float deltaTime = currentFrame - lastFrame;
@@ -332,31 +319,7 @@ int main()
 
 		ImGui::SliderInt("Trail Length", &trailLength, 0, 1000);
 		renderer.SetTrailLength(trailLength);
-		////fncn to add a new body
-		//ImGui::SliderFloat("Mass", &userMass, 1.0f, 1000.0f);
-		//ImGui::SliderFloat("Depth", &objectDepth, 0.1f, 100.9f);
-
-		//if (ImGui::Button("Spawn Object")) {
-		//	if (userBody == nullptr) {
-		//		int display_w, display_h;
-		//		glfwGetFramebufferSize(window1.GetGLFWWindow(), &display_w, &display_h);
-
-		//		double mouseX, mouseY;
-		//		glfwGetCursorPos(window1.GetGLFWWindow(), &mouseX, &mouseY);
-
-		//		glm::vec3 winCoords = glm::vec3((float)mouseX, (float)(display_h - mouseY), objectDepth);
-		//		glm::mat4 view = camera.view;
-		//		glm::mat4 proj = camera.projection;
-
-		//		glm::vec3 worldPos = glm::unProject(winCoords, view, proj, glm::vec4(0.0f, 0.0f, (float)display_w, (float)display_h));
-		//		glm::vec3 bodyVel = glm::vec3(0.0f, 0.0f, 0.0f);
-		//		userBody = new Body(earthMesh, userMass, worldPos,bodyVel );
-		//		bodies.push_back(userBody);
-		//		renderer.Submit(userBody);
-		//	}
-		//}
-
-		
+			
 		// Ends the window
 		ImGui::End();
 

@@ -32,14 +32,15 @@ vec4 pointLight()
 
 	// intensity of light with respect to distance
 	float dist = length(lightVec);
-	float a = 3.0;
-	float b = 0.7;
+	float a = 0.1;
+	float b = 0.1;
 	float inten = 1.0f / (a * dist * dist + b * dist + 1.0f);
-
+	inten=2.0f;
 	// ambient lighting
-	float ambient = 0.80f;
+	float ambient = 0.3f;
 
 	// diffuse lighting
+
 	vec3 normal = normalize(Normal);
 	vec3 lightDirection = normalize(lightVec);
 	float diffuse = max(dot(normal, lightDirection), 0.0f);
@@ -57,7 +58,7 @@ vec4 pointLight()
 vec4 direcLight()
 {
 	// ambient lighting
-	float ambient = 0.20f;
+	float ambient = 0.0f;
 
 	// diffuse lighting
 	vec3 normal = normalize(Normal);
@@ -107,6 +108,7 @@ void main()
 {
 	// outputs final color
 	FragColor = pointLight();
-	//FragColor = direcLight();
+
+//FragColor = direcLight();
 	//FragColor = spotLight();
 }
