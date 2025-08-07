@@ -22,6 +22,10 @@ void Renderer::DrawAll( Shader& shader,  Camera& camera)
         s.Activate();
         
         glUniformMatrix4fv(glGetUniformLocation(s.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        if(body->isSun)
+            glUniform1i(glGetUniformLocation(s.ID, "isSun"), 1);
+        else
+			glUniform1i(glGetUniformLocation(s.ID, "isSun"), 0);
         body->mesh.Draw(s, camera);
         body->UpdateTrail(); // Update trail with new position
     }

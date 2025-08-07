@@ -7,7 +7,7 @@ class Body
 {
 public:
     Body( Mesh& mesh, float mass,float radius,  glm::vec3& position, glm::vec3& velocity);
-
+    bool isSun = false;
     glm::vec3 position;
     glm::vec3 velocity;
     glm::vec3 acceleration;

@@ -139,6 +139,7 @@
     <None Include="default.vert" />
     <None Include="light.frag" />
     <None Include="light.vert" />
+    <None Include="sun.frag" />
     <None Include="trail.frag" />
     <None Include="trail.vert" />
   </ItemGroup>

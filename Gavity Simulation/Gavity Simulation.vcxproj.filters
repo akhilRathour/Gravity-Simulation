@@ -51,6 +51,9 @@
     <None Include="trail.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="sun.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

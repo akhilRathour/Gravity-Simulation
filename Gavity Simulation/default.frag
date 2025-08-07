@@ -12,6 +12,7 @@ in vec3 color;
 // Imports the texture coordinates from the Vertex Shader
 in vec2 texCoord;
 
+uniform bool isSun;
 
 
 // Gets the Texture Units from the main function
@@ -106,9 +107,17 @@ vec4 spotLight()
 
 void main()
 {
-	// outputs final color
-	FragColor = pointLight();
-
-//FragColor = direcLight();
-	//FragColor = spotLight();
+    if (isSun)
+    {
+        // Sun emits its own light, no lighting calculation needed
+        // Just return emissive bright color, optionally multiplied by texture
+        vec4 texColor = texture(diffuse0, texCoord);
+        FragColor = texColor * lightColor * 2.0;  // bright & glowing look
+    }
+    else
+    {
+        FragColor = pointLight();
+        // FragColor = direcLight();
+        // FragColor = spotLight();
+    }
 }

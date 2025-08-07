@@ -203,7 +203,7 @@ int main()
 	///mesh(mesh), mass(mass), position(position), velocity(velocity), 
 	
 	Body* Sun = new Body(SunMesh, Constants::SunMass, Constants::SunRadius, Constants::SunPos, Constants::SunVel);
-
+	Sun->isSun = true; // Mark the Sun as a special body
 	Body* Mars = new Body(earthMesh, Constants::MarsMass, Constants::MarsRadius, Constants::MarsPos, Constants::MarsVel);
 
 	bodies.push_back(earth);
